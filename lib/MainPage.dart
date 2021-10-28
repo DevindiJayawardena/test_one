@@ -11,6 +11,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int currentPosition = 0;
+  int _selectedIndex = 0;
 
   List<String> imagePathsList = [
     "assets/image_one.jpg",
@@ -20,11 +21,14 @@ class _MainPageState extends State<MainPage> {
 
   Widget buildImageCarousel(String imagePath, int index) {
     return Container(
-      margin : EdgeInsets.all(3),
-      color: Colors.green,
-      child : Image.asset(
-        imagePath,
-        fit : BoxFit.cover,
+      margin : EdgeInsets.all(8),
+      decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(100),),
+      child : ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Image.asset(
+          imagePath,
+          fit : BoxFit.cover,
+        ),
       ),
     );
   }
@@ -49,117 +53,209 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height : 25,
-            ),
-
-            Row(
-              children: [
-                Text('vuvdu'),
-                Text('vuvdu'),
-              ],
-            ),
-
-            SizedBox(
-              height : 25,
-            ),
-
-            CarouselSlider.builder(
-              itemCount: imagePathsList.length,
-              options: CarouselOptions(
-                  autoPlay: true,
-                  initialPage: 0,
-                  autoPlayInterval: Duration(seconds: 2),
-                  enableInfiniteScroll: false,
-                  height : 200,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      currentPosition = index;
-                    });
-                  }
-              ),
-              itemBuilder: (context, index, real_index){
-                final imagePath = imagePathsList[index];
-                return buildImageCarousel(imagePath , index);
-              },
-            ),
-
-
-            SizedBox(
-              height : 25,
-            ),
-
-            buildIndicator(),
-
-            SizedBox(
-              height : 25,
-            ),
-
-            const Divider(
-              thickness: 1,
-              //indent: 20,
-              //endIndent: 20,
-            ),
-
-            SizedBox(
-              height : 25,
-            ),
-
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
+      body: Container(
+        //child: Container(
+          padding: EdgeInsets.all(35),
+          child: Column(
+            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
+                children: [
                   Text(
-                    'Your News',
-                    style: TextStyle(
+                    'Featured News',
+                    style : TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 25,
                     ),
                   ),
-                  TextButton(
-                    onPressed: (){},
-                    child: Text(
-                      'Watch All',
-                      //textAlign: TextAlign.end,
-                      style: TextStyle(color : Colors.indigo, fontSize : 18, fontWeight: FontWeight.bold),
+                  Text(
+                    'Local News',
+                    style : TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color : Colors.grey
                     ),
                   ),
-
                 ],
+              ),
+
+
+              SizedBox(
+                height : 25,
+              ),
+
+
+              CarouselSlider.builder(
+                itemCount: imagePathsList.length,
+                options: CarouselOptions(
+                    autoPlay: true,
+                    initialPage: 0,
+                    autoPlayInterval: Duration(seconds: 2),
+                    enableInfiniteScroll: false,
+                    height : 200,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        currentPosition = index;
+                      });
+                    }
+                ),
+                itemBuilder: (context, index, real_index){
+                  final imagePath = imagePathsList[index];
+                  return buildImageCarousel(imagePath , index);
+                },
+              ),
+
+
+              SizedBox(
+                height : 25,
+              ),
+
+              buildIndicator(),
+
+              SizedBox(
+                height : 25,
+              ),
+
+              const Divider(
+                thickness: 1,
+              ),
+
+              SizedBox(
+                height : 25,
+              ),
+
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      'Your News',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: (){},
+                      child: Text(
+                        'Watch All',
+                        //textAlign: TextAlign.end,
+                        style: TextStyle(color : Colors.indigo, fontSize : 18, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+
+                  ],
+
+                ),
 
               ),
 
-            ),
+              SizedBox(
+                height : 2,
+              ),
 
-            SizedBox(
-              height : 25,
-            ),
+              //LIST VIEWBUILDER START
 
-            /*
-            ListView.builder(
-              itemCount: 1,
-              itemBuilder: (context, index) {
-                return Container(
-                  color: Colors.green,
-                  child: Text(
-                      'hvdu'
-                  ),
-                );
-                },
-            ),
+              Expanded(
+                flex: 1,
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.all(10),
+                  child:  ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: 5,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          ListTile(
+                            title: Text(
+                            'As you can see, we\'ve been toying around with optical illusions.',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 13,
+                              ),
+                            ),
+                            trailing: Image.asset('assets/vertical.jpg'),
+                            onTap: () {},
+                          ),
 
-             */
+                          SizedBox(
+                            height: 5,
+                          ),
 
+                          Row(
+                            children: [
+                              ElevatedButton(
+                                onPressed: (){},
+                                child: Text('Viral', style: TextStyle(fontSize : 13, color: Colors.indigo),),
+                              ),
 
-          ],
+                              SizedBox(
+                                width : 45,
+                              ),
+
+                              Text(
+                                '4h ago',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          const Divider(
+                            thickness: 1,
+                          ),
+
+                          SizedBox(
+                            height: 15,
+                          ),
+
+                        ],
+                      );
+                    }
+                  )
+                ),
+              ),
+
+            ],
+
+          ),
+
         ),
+
+
+
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined, size : 30),
+            label: ' ',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search, size : 30,),
+            label: ' ',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.play_circle_outline, size : 30),
+            label: ' ',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.assignment_sharp, size : 30),
+            label: ' ',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blueAccent,
+        unselectedItemColor: Colors.grey,
+        onTap: null,
+
       ),
     );
+
 
   }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'MyHomePage_1.dart';
+import 'MainPage.dart';
 
 
 void main() {
@@ -18,8 +18,13 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.grey,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.indigo[100],
+          ),
+        ),
       ),
-      home: MyHomePage_1(),
+      home: MainPage(),
     );
   }
 }
